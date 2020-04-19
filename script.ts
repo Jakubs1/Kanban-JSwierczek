@@ -38,10 +38,14 @@ class Task {
 class Kanban {
     boards: Board[] = [];
     boardsContainer: HTMLDivElement;
+    addBoardButton: HTMLButtonElement;
+    removeBoardButton: HTMLButtonElement;
     notesSection = document.createElement("div");
     pageAddButton = document.createElement("button");
-    constructor(container: HTMLDivElement) {
+    constructor(container: HTMLDivElement, addButton: HTMLButtonElement, removeButton: HTMLButtonElement) {
         this.boardsContainer = container;
+        this.addBoardButton = addButton;
+        this.removeBoardButton = removeButton;
     }
     initialBoard() {
         let title = prompt("Dodaj nazwę kolumny");
@@ -49,6 +53,9 @@ class Kanban {
             this.drawBoard(title);
             let board: Board = new Board(title, this.notesSection);
             this.boards.push(board);
+            this.addBoardButton.className = "bothButtons";
+            this.removeBoardButton.className = "bothButtons removeButtonVisible";
+
             this.pageAddButton.addEventListener("click", () => board.taskCreate());
 
         }
@@ -91,7 +98,7 @@ function appStart() {
     let boardsContainer: HTMLDivElement = <HTMLDivElement>document.getElementById("boards");
     let addBoardButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("addBoardButton");
     let removeBoardButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("removeBoardButton");
-    let kanban: Kanban = new Kanban(boardsContainer);
+    let kanban: Kanban = new Kanban(boardsContainer, addBoardButton, removeBoardButton);
     addBoardButton.addEventListener('click', () => kanban.initialBoard());
     removeBoardButton.addEventListener('click', () => kanban.removeBoard());
 

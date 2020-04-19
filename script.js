@@ -30,11 +30,13 @@ var Task = /** @class */ (function () {
     return Task;
 }());
 var Kanban = /** @class */ (function () {
-    function Kanban(container) {
+    function Kanban(container, addButton, removeButton) {
         this.boards = [];
         this.notesSection = document.createElement("div");
         this.pageAddButton = document.createElement("button");
         this.boardsContainer = container;
+        this.addBoardButton = addButton;
+        this.removeBoardButton = removeButton;
     }
     Kanban.prototype.initialBoard = function () {
         var title = prompt("Dodaj nazwę kolumny");
@@ -42,6 +44,8 @@ var Kanban = /** @class */ (function () {
             this.drawBoard(title);
             var board_1 = new Board(title, this.notesSection);
             this.boards.push(board_1);
+            this.addBoardButton.className = "bothButtons";
+            this.removeBoardButton.className = "bothButtons removeButtonVisible";
             this.pageAddButton.addEventListener("click", function () { return board_1.taskCreate(); });
         }
     };
@@ -76,7 +80,7 @@ function appStart() {
     var boardsContainer = document.getElementById("boards");
     var addBoardButton = document.getElementById("addBoardButton");
     var removeBoardButton = document.getElementById("removeBoardButton");
-    var kanban = new Kanban(boardsContainer);
+    var kanban = new Kanban(boardsContainer, addBoardButton, removeBoardButton);
     addBoardButton.addEventListener('click', function () { return kanban.initialBoard(); });
     removeBoardButton.addEventListener('click', function () { return kanban.removeBoard(); });
 }
