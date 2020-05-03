@@ -9,41 +9,75 @@ export class MainPage {
 
 
     constructor() {
-        this.addBoardButton.addEventListener('click', () => this.initialBoard());
-        this.removeBoardButton.addEventListener('click', () => this.removeBoard());
+        this.addBoardButton
+            .addEventListener('click', () => this.initialBoard());
+        this.removeBoardButton
+            .addEventListener('click', () => this.removeBoard());
+
+        this.getBoards();
+        this.writeBoards();
     }
 
     initialBoard() {
-        let title = prompt("Dodaj nazwę kolumny");
+        let title: string = prompt("Dodaj nazwę kolumny");
         if (title != null) {
             let board: Board = new Board(title);
-            this.drawBoard(title, board.notesSection);
             this.boards.push(board);
-            this.addBoardButton.className = "bothButtons";
-            this.removeBoardButton.className = "bothButtons removeButtonVisible";
+            // this.addBoardButton.className = "bothButtons";
+            // this.removeBoardButton.className = "bothButtons removeButtonVisible";
+            this.saveBoard();
+            location.reload();
+
         }
     }
 
     removeBoard() {
-        let title = prompt("Usuń kolumnę o nazwie");
+        let title: string = prompt("Usuń kolumnę o nazwie");
         if (title != null) {
-            const index = this.boards.map(x => x.title).indexOf(title);
+            const index: number = this.boards.map(x => x.title).indexOf(title);
             this.boards.splice(index, 1);
+
+            this.saveBoard();
+            location.reload();
         }
+        //TODO: NIE USUWAJ JESLI NIE MA PODANEGO TYTULU
+        //TODO: usun wrazliwosc na wielkosc liter
     }
 
-    drawBoard(title, notesSection) {
-        const singleBoard = document.createElement("div")
-        const titleSection = document.createElement("div");
-        const boardTitle = document.createElement("h1");
+    drawBoard(board: Board) {
+        const singleBoard: HTMLDivElement = document.createElement("div")
+        const titleSection: HTMLDivElement = document.createElement("div");
+        const boardTitle: HTMLHeadingElement = document.createElement("h1");
+        let notesSection: HTMLDivElement = document.createElement("div");
         titleSection.className = "titleSection";
         boardTitle.className = "boardTitle";
         singleBoard.className = "singleBoard";
-        boardTitle.innerHTML = title;
+        notesSection.className = "taskSection";
+        boardTitle.innerHTML = board.title;
+        console.log(notesSection);
+        if (board.notesSection) {
+            notesSection = board.notesSection
+            console.log(notesSection);
+        }
+
         titleSection.appendChild(boardTitle);
         singleBoard.appendChild(titleSection);
         singleBoard.appendChild(notesSection);
         this.boardsContainer.appendChild(singleBoard);
+    }
+
+    saveBoard() {
+        localStorage.setItem("board", JSON.stringify(this.boards));
+    }
+
+    getBoards() {
+        if (JSON.parse(localStorage.getItem('board')) != null)
+            this.boards = JSON.parse(localStorage.getItem('board'));
+    }
+    writeBoards() {
+        this.boards.forEach(board => {
+            this.drawBoard(board);
+        })
     }
 }
 
