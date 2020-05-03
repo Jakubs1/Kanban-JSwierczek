@@ -65,6 +65,8 @@
     height: 400px;
     width: 200px;
     overflow: auto;
+    background-color: rgb(174, 175, 173);
+
 }
 
 .boardTitle {
@@ -73,9 +75,15 @@
 }
 
 .taskSection {
-    padding: 10%;
-    background-color: lightblue;
+    margin: 10%;
+    padding: 2% 5%;
+    background-color: rgb(88, 194, 230);
 
+}
+
+.taskDescription {
+    overflow-wrap: break-word;
+    font-family: 'Montserrat', sans-serif;
 }
 
 #pageAddButton {
@@ -88,7 +96,6 @@
     display: inline-block;
     font-size: 10px;
     margin: 20px 50px 10px 50px;
-    cursor: pointer;
     font-family: 'Montserrat', sans-serif;
     width: 100px;
 }

@@ -1,41 +1,6 @@
-class Board {
-    title: string;
-    tasks: Task[] = [];
-    tasksContainer: HTMLDivElement;
-    constructor(header: string, container: HTMLDivElement) {
-        this.title = header;
-        this.tasksContainer = container;
-    }
+import { Board } from "./board";
 
-    taskCreate() {
-        let content = prompt("Nazwij karteczkę");
-        if (content != null) {
-            let task: Task = new Task(content);
-            this.tasks.push(task);
-            this.drawTask(task);
-
-        }
-    }
-
-    drawTask(task: Task) {
-        const taskSection = document.createElement("div");
-        const taskDescription = document.createElement("p");
-        taskSection.className = "taskSection";
-        taskDescription.className = "taskDescription";
-        taskDescription.innerHTML = task.description;
-        taskSection.appendChild(taskDescription);
-        this.tasksContainer.appendChild(taskSection);
-    }
-
-}
-class Task {
-    description: string;
-    constructor(content: string) {
-        this.description = content;
-    }
-}
-
-class Kanban {
+export class MainPage {
     boards: Board[] = [];
     boardsContainer: HTMLDivElement;
     addBoardButton: HTMLButtonElement;
@@ -64,8 +29,8 @@ class Kanban {
     removeBoard() {
         let title = prompt("Usuń kolumnę o nazwie");
         if (title != null) {
-            // const index = this.boards.indexOf();
-            // this.boards.splice(index, 1);
+            const index = this.boards.map(x => x.title).indexOf(title);
+            this.boards.splice(index, 1);
         }
     }
 
@@ -90,16 +55,13 @@ class Kanban {
     }
 }
 
-
-
-document.addEventListener("DOMContentLoaded", appStart);
-
-function appStart() {
-    let boardsContainer: HTMLDivElement = <HTMLDivElement>document.getElementById("boards");
-    let addBoardButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("addBoardButton");
-    let removeBoardButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("removeBoardButton");
-    let kanban: Kanban = new Kanban(boardsContainer, addBoardButton, removeBoardButton);
-    addBoardButton.addEventListener('click', () => kanban.initialBoard());
-    removeBoardButton.addEventListener('click', () => kanban.removeBoard());
-
-}
+document.addEventListener("DOMContentLoaded", () => {
+    new MainPage();
+    // TODO
+    // let boardsContainer: HTMLDivElement = <HTMLDivElement>document.getElementById("boards");
+    // let addBoardButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("addBoardButton");
+    // let removeBoardButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("removeBoardButton");
+    // let kanban: MainPage = new MainPage(boardsContainer, addBoardButton, removeBoardButton);
+    // addBoardButton.addEventListener('click', () => kanban.initialBoard());
+    // removeBoardButton.addEventListener('click', () => kanban.removeBoard());
+});
