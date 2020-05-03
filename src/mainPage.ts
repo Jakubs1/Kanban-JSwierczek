@@ -2,16 +2,18 @@ import { Board } from "./board";
 
 export class MainPage {
     boards: Board[] = [];
-    boardsContainer: HTMLDivElement;
-    addBoardButton: HTMLButtonElement;
-    removeBoardButton: HTMLButtonElement;
+    boardsContainer: HTMLDivElement = document.querySelector("#boards");
+    addBoardButton: HTMLButtonElement = document.querySelector("#addBoardButton");
+    removeBoardButton: HTMLButtonElement = document.querySelector("#removeBoardButton");
     notesSection = document.createElement("div");
     pageAddButton = document.createElement("button");
-    constructor(container: HTMLDivElement, addButton: HTMLButtonElement, removeButton: HTMLButtonElement) {
-        this.boardsContainer = container;
-        this.addBoardButton = addButton;
-        this.removeBoardButton = removeButton;
+
+
+    constructor() {
+        this.addBoardButton.addEventListener('click', () => this.initialBoard());
+        this.removeBoardButton.addEventListener('click', () => this.removeBoard());
     }
+
     initialBoard() {
         let title = prompt("Dodaj nazwę kolumny");
         if (title != null) {
@@ -58,10 +60,5 @@ export class MainPage {
 document.addEventListener("DOMContentLoaded", () => {
     new MainPage();
     // TODO
-    // let boardsContainer: HTMLDivElement = <HTMLDivElement>document.getElementById("boards");
-    // let addBoardButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("addBoardButton");
-    // let removeBoardButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("removeBoardButton");
-    // let kanban: MainPage = new MainPage(boardsContainer, addBoardButton, removeBoardButton);
-    // addBoardButton.addEventListener('click', () => kanban.initialBoard());
-    // removeBoardButton.addEventListener('click', () => kanban.removeBoard());
+
 });

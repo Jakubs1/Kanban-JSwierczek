@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const config = {
-    entry: './src/app.ts',
+    entry: './src/mainPage.ts',
     module: {
         rules: [{
             test: /\.ts?$/,
