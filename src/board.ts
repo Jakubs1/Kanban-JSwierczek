@@ -3,10 +3,16 @@ import { Task } from "./task";
 export class Board {
     title: string;
     tasks: Task[] = [];
-    tasksContainer: HTMLDivElement;
-    constructor(header: string, container: HTMLDivElement) {
+    notesSection: HTMLDivElement = document.createElement("div");
+    pageAddButton: HTMLButtonElement = document.createElement("button");
+    constructor(header: string) {
         this.title = header;
-        this.tasksContainer = container;
+
+        this.notesSection.className = "notesSection";
+        this.pageAddButton.id = "pageAddButton";
+        this.pageAddButton.innerHTML = "Dodaj kartkę";
+        this.notesSection.appendChild(this.pageAddButton);
+        this.pageAddButton.addEventListener("click", () => this.taskCreate());
     }
 
     taskCreate() {
@@ -26,7 +32,7 @@ export class Board {
         taskDescription.className = "taskDescription";
         taskDescription.innerHTML = task.description;
         taskSection.appendChild(taskDescription);
-        this.tasksContainer.appendChild(taskSection);
+        this.notesSection.appendChild(taskSection);
     }
 
 }

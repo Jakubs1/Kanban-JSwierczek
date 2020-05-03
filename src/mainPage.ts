@@ -5,8 +5,7 @@ export class MainPage {
     boardsContainer: HTMLDivElement = document.querySelector("#boards");
     addBoardButton: HTMLButtonElement = document.querySelector("#addBoardButton");
     removeBoardButton: HTMLButtonElement = document.querySelector("#removeBoardButton");
-    notesSection = document.createElement("div");
-    pageAddButton = document.createElement("button");
+
 
 
     constructor() {
@@ -17,14 +16,11 @@ export class MainPage {
     initialBoard() {
         let title = prompt("Dodaj nazwę kolumny");
         if (title != null) {
-            this.drawBoard(title);
-            let board: Board = new Board(title, this.notesSection);
+            let board: Board = new Board(title);
+            this.drawBoard(title, board.notesSection);
             this.boards.push(board);
             this.addBoardButton.className = "bothButtons";
             this.removeBoardButton.className = "bothButtons removeButtonVisible";
-
-            this.pageAddButton.addEventListener("click", () => board.taskCreate());
-
         }
     }
 
@@ -36,29 +32,21 @@ export class MainPage {
         }
     }
 
-    drawBoard(title) {
+    drawBoard(title, notesSection) {
         const singleBoard = document.createElement("div")
         const titleSection = document.createElement("div");
         const boardTitle = document.createElement("h1");
         titleSection.className = "titleSection";
-        this.notesSection.className = "notesSection";
         boardTitle.className = "boardTitle";
         singleBoard.className = "singleBoard";
-        this.pageAddButton.id = "pageAddButton";
-        this.pageAddButton.innerHTML = "Dodaj kartkę";
         boardTitle.innerHTML = title;
         titleSection.appendChild(boardTitle);
         singleBoard.appendChild(titleSection);
-        this.notesSection.appendChild(this.pageAddButton);
-        singleBoard.appendChild(this.notesSection);
+        singleBoard.appendChild(notesSection);
         this.boardsContainer.appendChild(singleBoard);
-
-
     }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     new MainPage();
-    // TODO
-
 });
