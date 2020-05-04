@@ -5,13 +5,26 @@ export class Board {
     tasks: Task[] = [];
     notesSection: HTMLDivElement = document.createElement("div");
     pageAddButton: HTMLButtonElement = document.createElement("button");
-    constructor(header: string) {
+    singleBoard: HTMLDivElement;
+    constructor(header: string, singleBoard: HTMLDivElement) {
         this.title = header;
+        this.singleBoard = singleBoard;
+        const titleSection: HTMLDivElement = document.createElement("div");
+        const boardTitle: HTMLHeadingElement = document.createElement("h1");
 
+        titleSection.className = "titleSection";
+        boardTitle.className = "boardTitle";
+        this.notesSection.className = "taskSection";
+        boardTitle.innerHTML = this.title;
         this.notesSection.className = "notesSection";
         this.pageAddButton.id = "pageAddButton";
         this.pageAddButton.innerHTML = "Dodaj kartkę";
+
         this.notesSection.appendChild(this.pageAddButton);
+        titleSection.appendChild(boardTitle);
+        this.singleBoard.appendChild(titleSection);
+        this.singleBoard.appendChild(this.notesSection);
+
         this.pageAddButton
             .addEventListener("click", () => this.initialTask());
 

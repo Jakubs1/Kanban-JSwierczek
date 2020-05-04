@@ -9,19 +9,19 @@ export class MainPage {
 
 
     constructor() {
+        this.getBoards();
+        this.writeBoards();
+
         this.addBoardButton
             .addEventListener('click', () => this.initialBoard());
         this.removeBoardButton
             .addEventListener('click', () => this.removeBoard());
-
-        this.getBoards();
-        this.writeBoards();
     }
 
     initialBoard() {
         let title: string = prompt("Dodaj nazwę kolumny");
         if (title != null) {
-            let board: Board = new Board(title);
+            let board: Board = new Board(title, document.createElement("div"));
             this.boards.push(board);
             // this.addBoardButton.className = "bothButtons";
             // this.removeBoardButton.className = "bothButtons removeButtonVisible";
@@ -45,25 +45,10 @@ export class MainPage {
     }
 
     drawBoard(board: Board) {
-        const singleBoard: HTMLDivElement = document.createElement("div")
-        const titleSection: HTMLDivElement = document.createElement("div");
-        const boardTitle: HTMLHeadingElement = document.createElement("h1");
-        let notesSection: HTMLDivElement = document.createElement("div");
-        titleSection.className = "titleSection";
-        boardTitle.className = "boardTitle";
-        singleBoard.className = "singleBoard";
-        notesSection.className = "taskSection";
-        boardTitle.innerHTML = board.title;
-        console.log(notesSection);
-        if (board.notesSection) {
-            notesSection = board.notesSection
-            console.log(notesSection);
-        }
 
-        titleSection.appendChild(boardTitle);
-        singleBoard.appendChild(titleSection);
-        singleBoard.appendChild(notesSection);
-        this.boardsContainer.appendChild(singleBoard);
+        board.singleBoard.className = "singleBoard";
+
+        this.boardsContainer.appendChild(board.singleBoard);
     }
 
     saveBoard() {
