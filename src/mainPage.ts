@@ -21,7 +21,7 @@ export class MainPage {
     initialBoard() {
         let title: string = prompt("Dodaj nazwę kolumny");
         if (title != null) {
-            let board: Board = new Board(title, document.createElement("div"));
+            let board: Board = new Board(title);
             this.boards.push(board);
             // this.addBoardButton.className = "bothButtons";
             // this.removeBoardButton.className = "bothButtons removeButtonVisible";
@@ -45,10 +45,8 @@ export class MainPage {
     }
 
     drawBoard(board: Board) {
-
-        board.singleBoard.className = "singleBoard";
-
-        this.boardsContainer.appendChild(board.singleBoard);
+        let tempBoard: HTMLDivElement = board.renderBoard();
+        this.boardsContainer.appendChild(tempBoard);
     }
 
     saveBoard() {

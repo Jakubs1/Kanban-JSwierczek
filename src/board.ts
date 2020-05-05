@@ -5,15 +5,24 @@ export class Board {
     tasks: Task[] = [];
     notesSection: HTMLDivElement = document.createElement("div");
     pageAddButton: HTMLButtonElement = document.createElement("button");
-    singleBoard: HTMLDivElement;
-    constructor(header: string, singleBoard: HTMLDivElement) {
+    constructor(header: string) {
         this.title = header;
-        this.singleBoard = singleBoard;
+
+        this.pageAddButton
+            .addEventListener("click", () => this.initialTask());
+
+        this.getTasks();
+        this.writeTasks();
+    }
+
+    renderBoard() {
         const titleSection: HTMLDivElement = document.createElement("div");
         const boardTitle: HTMLHeadingElement = document.createElement("h1");
+        const singleBoard: HTMLDivElement = document.createElement('div');
 
         titleSection.className = "titleSection";
         boardTitle.className = "boardTitle";
+        singleBoard.className = "singleBoard";
         this.notesSection.className = "taskSection";
         boardTitle.innerHTML = this.title;
         this.notesSection.className = "notesSection";
@@ -22,14 +31,10 @@ export class Board {
 
         this.notesSection.appendChild(this.pageAddButton);
         titleSection.appendChild(boardTitle);
-        this.singleBoard.appendChild(titleSection);
-        this.singleBoard.appendChild(this.notesSection);
+        singleBoard.appendChild(titleSection);
+        singleBoard.appendChild(this.notesSection);
 
-        this.pageAddButton
-            .addEventListener("click", () => this.initialTask());
-
-        this.getTasks();
-        this.writeTasks();
+        return singleBoard;
     }
 
     initialTask() {
