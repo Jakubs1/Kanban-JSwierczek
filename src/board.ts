@@ -1,13 +1,16 @@
 import { Task } from "./task";
+import { BoardData } from "./boardData";
 
 export class Board {
     title: string;
     tasks: Task[] = [];
+    boardData: BoardData;
     notesSection: HTMLDivElement = document.createElement("div");
     pageAddButton: HTMLButtonElement = document.createElement("button");
-    constructor(header: string) {
-        this.title = header;
-
+    constructor(boardData: BoardData) {
+        this.title = boardData.title;
+        this.tasks = boardData.tasks;
+        this.boardData = boardData;
         this.pageAddButton
             .addEventListener("click", () => this.initialTask());
 
@@ -24,7 +27,7 @@ export class Board {
         boardTitle.className = "boardTitle";
         singleBoard.className = "singleBoard";
         this.notesSection.className = "taskSection";
-        boardTitle.innerHTML = this.title;
+        boardTitle.innerText = this.title;
         this.notesSection.className = "notesSection";
         this.pageAddButton.id = "pageAddButton";
         this.pageAddButton.innerHTML = "Dodaj kartkę";
@@ -49,12 +52,16 @@ export class Board {
     }
 
     saveTask() {
-        localStorage.setItem('task', JSON.stringify(this.tasks));
+        this.boardData.tasks = this.tasks;
+        // localStorage.setItem('task', JSON.stringify(this.tasks));
     }
 
     getTasks() {
-        if (JSON.parse(localStorage.getItem('task')) != null)
-            this.tasks = JSON.parse(localStorage.getItem('task'));
+        if (this.boardData.tasks != null) {
+            this.tasks = this.boardData.tasks;
+        }
+        // if (JSON.parse(localStorage.getItem('task')) != null)
+        //     this.tasks = JSON.parse(localStorage.getItem('task'));
     }
 
     writeTasks() {
