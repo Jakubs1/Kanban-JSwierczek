@@ -39,7 +39,6 @@ export class MainPage {
         let title: string = prompt("Usuń kolumnę o nazwie");
         if (title != "") {
             const index: number = this.boardsData.map(x => x.title).indexOf(title);
-            console.log(index);
             if (index != -1) {
                 this.boardsData.splice(index, 1);
                 this.saveBoard();

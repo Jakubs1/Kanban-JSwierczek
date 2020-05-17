@@ -46,22 +46,25 @@ export class Board {
             let task: Task = new Task(content);
             this.tasks.push(task);
 
-            this.saveTask();
+            this.saveTask(task);
             location.reload();
         }
     }
 
-    saveTask() {
-        this.boardData.tasks = this.tasks;
-        // localStorage.setItem('task', JSON.stringify(this.tasks));
+    saveTask(task: Task) {
+        if (JSON.parse(localStorage.getItem('boardData')) != null) {
+            let boardsData = JSON.parse(localStorage.getItem('boardData'));
+            const index: number = boardsData.map(x => x.title).indexOf(this.title);
+            boardsData[index].tasks.push(task);
+
+            localStorage.setItem('boardData', JSON.stringify(boardsData));
+        }
     }
 
     getTasks() {
         if (this.boardData.tasks != null) {
             this.tasks = this.boardData.tasks;
         }
-        // if (JSON.parse(localStorage.getItem('task')) != null)
-        //     this.tasks = JSON.parse(localStorage.getItem('task'));
     }
 
     writeTasks() {
