@@ -18,6 +18,7 @@ export class MainPage {
             .addEventListener('click', () => this.initialBoard());
         this.removeBoardButton
             .addEventListener('click', () => this.removeBoard());
+
     }
 
     initialBoard() {

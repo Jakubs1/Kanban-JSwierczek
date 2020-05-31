@@ -5,8 +5,10 @@ export class Board {
     title: string;
     tasks: Task[] = [];
     boardData: BoardData;
+    draggedTask: Task;
     notesSection: HTMLDivElement = document.createElement("div");
     pageAddButton: HTMLButtonElement = document.createElement("button");
+
     constructor(boardData: BoardData) {
         this.title = boardData.title;
         this.tasks = boardData.tasks;
@@ -36,6 +38,19 @@ export class Board {
         titleSection.appendChild(boardTitle);
         singleBoard.appendChild(titleSection);
         singleBoard.appendChild(this.notesSection);
+
+        this.notesSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        this.notesSection.addEventListener('dragenter', (e) => {
+            e.preventDefault();
+        });
+        this.notesSection.addEventListener('drop', () => {
+            this.tasks.push(this.draggedTask);
+            this.saveTask(this.draggedTask);
+            location.reload();
+
+        });
 
         return singleBoard;
     }
@@ -74,13 +89,36 @@ export class Board {
     }
 
     drawTask(task: Task) {
+        let draggedItem: HTMLDivElement;
+
         const taskSection: HTMLDivElement = document.createElement("div");
         const taskDescription: HTMLParagraphElement = document.createElement("p");
+
         taskSection.className = "taskSection";
+        taskSection.draggable = true;
         taskDescription.className = "taskDescription";
         taskDescription.innerHTML = task.description;
+
         taskSection.appendChild(taskDescription);
         this.notesSection.appendChild(taskSection);
+
+        taskSection.addEventListener('dragstart', () => {
+            draggedItem = taskSection;
+            this.draggedTask = task;
+
+            setTimeout(() => {
+                taskSection.style.display = 'none';
+            }, 0);
+        });
+        taskSection.addEventListener('dragend', () => {
+            setTimeout(() => {
+                draggedItem.style.display = 'block';
+                draggedItem = null;
+                this.draggedTask = null;
+            }, 0);
+        });
+
+
     }
 
 }
